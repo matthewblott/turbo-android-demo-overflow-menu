@@ -2,12 +2,18 @@ package com.example.demo.features.web
 
 import android.os.Bundle
 import android.view.View
+import dev.hotwire.strada.BridgeDelegate
+import com.example.demo.R
 import com.example.demo.base.NavDestination
 import com.example.demo.strada.bridgeComponentFactories
-import dev.hotwire.strada.BridgeDelegate
+//import com.example.demo.util.SIGN_IN_URL
 import dev.hotwire.turbo.fragments.TurboWebFragment
 import dev.hotwire.turbo.nav.TurboNavGraphDestination
 import dev.hotwire.turbo.views.TurboWebView
+import dev.hotwire.turbo.errors.HttpError
+import dev.hotwire.turbo.visit.TurboVisitAction.REPLACE
+import dev.hotwire.turbo.errors.TurboVisitError
+import dev.hotwire.turbo.visit.TurboVisitOptions
 
 @TurboNavGraphDestination(uri = "turbo://fragment/web")
 open class WebFragment : TurboWebFragment(), NavDestination {
@@ -21,6 +27,7 @@ open class WebFragment : TurboWebFragment(), NavDestination {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toolbarForNavigation()?.inflateMenu(R.menu.web)
         viewLifecycleOwner.lifecycle.addObserver(bridgeDelegate)
     }
 
@@ -44,4 +51,5 @@ open class WebFragment : TurboWebFragment(), NavDestination {
     override fun onWebViewDetached(webView: TurboWebView) {
         bridgeDelegate.onWebViewDetached()
     }
+
 }
